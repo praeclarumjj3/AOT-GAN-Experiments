@@ -14,6 +14,8 @@ from loss import loss as loss_module
 from .common import timer, reduce_loss_dict
 from icecream import ic
 from utils.helpers import visualize_run, visualize_single_map
+from etaprogress.progress import ProgressBar
+import sys
 
 class Trainer():
     def __init__(self, args):
@@ -105,7 +107,8 @@ class Trainer():
     def train(self):
         pbar = range(self.iteration, self.args.iterations)
         if self.args.global_rank == 0: 
-            pbar = tqdm(range(self.args.iterations), initial=self.iteration, dynamic_ncols=True, smoothing=0.01)
+            total = self.args.iterations
+            bar = ProgressBar(total, max_width=80)
             timer_data, timer_model = timer(), timer()
 
         if self.args.global_rank == 0:
@@ -118,6 +121,10 @@ class Trainer():
 
         for idx in pbar:
             self.iteration += 1
+            
+            if self.args.global_rank==0:
+                bar.numerator = self.iteration  
+                print(bar, end='\r')
             images, masks, filename = next(self.dataloader)
             images, masks = images.cuda(), masks.cuda()
             images_masked = (images * (1 - masks).float()) + masks
@@ -162,14 +169,13 @@ class Trainer():
 
                 advd_loss = losses['advd']
                 iter_adv_d_loss.append(advd_loss.item())
+                sys.stdout.flush()
 
             
             if self.args.global_rank == 0 and (self.iteration % self.args.print_every == 0): 
-                pbar.update(self.args.print_every)
                 description = f'mt:{timer_model.release():.1f}s, dt:{timer_data.release():.1f}s, '
                 for key, val in losses.items(): 
                     description += f'{key}:{val.item():.3f}, '
-                # pbar.set_description((description))
                 ic(description)
 
                 k = int(self.iteration // self.args.print_every)

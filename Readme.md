@@ -32,7 +32,8 @@ wget http://data.csail.mit.edu/places/places365/places365standard_easyformat.tar
 
 - Download the [PConv Masks](https://nv-adlr.github.io/publication/partialconv-inpainting):
 ``` 
-wget https://www.dropbox.com/s/qp8cxqttta4zi70/irregular_mask.zip
+wget https://www.dropbox.com/s/qp8cxqttta4zi70/irregular_mask.zip  // training dataset
+wget https://www.dropbox.com/s/qp8cxqttta4zi70/test_mask.zip       // testing dataset
 ```
 
 - Unzip the files according to the following structure
@@ -41,7 +42,7 @@ wget https://www.dropbox.com/s/qp8cxqttta4zi70/irregular_mask.zip
 AOT-GAN-Experiments
 ├── dataset
 │   ├── places2 (rename places365 folder)
-│   ├── pconv (rename the folder inside irregular_mask)
+│   ├── pconv (rename the folder inside irregular_mask / test_mask)
 ```
 
 - Install [Pytorch](https://pytorch.org/get-started/locally/) and other dependencies creating a conda environment:
@@ -98,19 +99,21 @@ $ python -m pretty_errors
     - **Adv G Loss** = 0.01 * L<sub>gen_gan</sub>
     - **Adv D Loss** = L<sub>gen_disc</sub>
 
-- The model was trained for `40000 iterations` on a total of `183604 images` with  `batch size=8`  
+- The model was trained for `40000 iterations` on a total of `18034 images` with  `batch size=8`  
+
+### Results using the Training PConv Mask Dataset
 
 #### Iteration 20000
 
-![Train0](visualizations/losses/train_loss10.png)
+![Train0](visualizations/pconv_train/losses/train_loss10.png)
 
-![Demo0](visualizations/runs/run10.jpg)
+![Demo0](visualizations/pconv_train/runs/run10.jpg)
 
 #### Iteration 40000
 
-![Train1](visualizations/losses/train_loss20.png)
+![Train1](visualizations/pconv_train/losses/train_loss20.png)
 
-![Demo1](visualizations/runs/run20.jpg)
+![Demo1](visualizations/pconv_train/runs/run20.jpg)
 
 ### Observations
 

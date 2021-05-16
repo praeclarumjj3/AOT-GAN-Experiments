@@ -91,3 +91,4 @@ dependencies:
     - werkzeug==1.0.1
     - icecream
     - matplotlib
+    - etaprogress
