@@ -54,7 +54,7 @@ parser.add_argument('--adv_weight', type=float, default=0.01,
                     help='loss weight for adversarial loss')
 
 # training specifications 
-parser.add_argument('--iterations', type=int, default=1e4,
+parser.add_argument('--iterations', type=int, default=4e4,
                     help='the number of iterations for training')
 parser.add_argument('--batch_size', type=int, default=8,
                     help='batch size in each mini-batch')
@@ -65,9 +65,9 @@ parser.add_argument('--resume', action='store_true',
 
 
 # log specifications 
-parser.add_argument('--print_every', type=int, default=1e3,
+parser.add_argument('--print_every', type=int, default=2e3,
                     help='frequency for updating progress bar')
-parser.add_argument('--save_every', type=int, default=1e3,
+parser.add_argument('--save_every', type=int, default=2e3,
                     help='frequency for saving models')
 parser.add_argument('--save_dir', type=str, default='experiments',
                     help='directory for saving models and logs')

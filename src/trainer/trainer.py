@@ -88,7 +88,7 @@ class Trainer():
                 {'optimG': self.optimG.state_dict(), 'optimD': self.optimD.state_dict()}, 
                 os.path.join(self.args.save_dir, f'O{str(self.iteration).zfill(7)}.pt'))
             
-    def plot_iter_loss(self, iter_l1_loss, iter_adv_g_loss, iter_adv_d_loss):
+    def plot_iter_loss(self, iter_l1_loss, iter_adv_g_loss, iter_adv_d_loss, k=None):
         plt.close()
         plt.plot(list(range(1, len(iter_l1_loss) + 1)), iter_l1_loss, label = "Rec Loss")
         plt.plot(list(range(1, len(iter_adv_g_loss) + 1)), iter_adv_g_loss, label = "Adv G Loss")
@@ -97,7 +97,10 @@ class Trainer():
         plt.title("Training Loss")
         if not os.path.exists('visualizations/losses/'):
                 os.makedirs('visualizations/losses/')
-        plt.savefig('visualizations/losses/train_loss.png')
+        if k is None:
+            plt.savefig('visualizations/losses/train_loss.png')
+        else:
+            plt.savefig('visualizations/losses/train_loss{}.png'.format(k))
 
     def train(self):
         pbar = range(self.iteration, self.args.iterations)
@@ -110,8 +113,8 @@ class Trainer():
             iter_adv_g_loss = []
             iter_adv_d_loss = []
         
-        if not os.path.exists('visualizations/runs/train'):
-            os.makedirs('visualizations/runs/train')
+        if not os.path.exists('visualizations/runs/'):
+            os.makedirs('visualizations/runs/')
 
         for idx in pbar:
             self.iteration += 1
@@ -166,10 +169,12 @@ class Trainer():
                 description = f'mt:{timer_model.release():.1f}s, dt:{timer_data.release():.1f}s, '
                 for key, val in losses.items(): 
                     description += f'{key}:{val.item():.3f}, '
-                pbar.set_description((description))
+                # pbar.set_description((description))
+                ic(description)
 
-                k = self.iteration//self.args.print_every
+                k = int(self.iteration // self.args.print_every)
                 visualize_run(k, images, 1 - masks, images * (1-masks), pred_img.detach(), comp_img.detach())
+                self.plot_iter_loss(iter_l1_loss, iter_adv_g_loss, iter_adv_d_loss, k)
             
             if self.args.global_rank == 0 and (self.iteration % self.args.save_every) == 0: 
                 self.save()

@@ -93,19 +93,30 @@ $ python -m pretty_errors
 
 ## 5. Experiments
 
-**Loss:** *λ<sub>1</sub>* **L<sub>rec</sub>** + *λ<sub>2</sub>* **L<sub>perceptual</sub>** + *λ<sub>3</sub>* **L<sub>style</sub>** + *λ<sub>4</sub>* **L<sub>adv</sub>**
+- In the plots below:
+    - **Rec Loss** =  *λ<sub>1</sub>* L<sub>rec</sub> + *λ<sub>2</sub>* L<sub>perceptual</sub> + *λ<sub>3</sub>* L<sub>style<sub>  ; λ<sub>1</sub> = 1, λ<sub>2</sub> = 0.1, λ<sub>3</sub> = 250
+    - **Adv G Loss** = 0.01 * L<sub>gen_gan</sub>
+    - **Adv D Loss** = L<sub>gen_disc</sub>
 
+- The model was trained for `40000 iterations` on a total of `183604 images` with  `batch size=8`  
+
+#### Iteration 20000
+
+![Train0](visualizations/losses/train_loss10.png)
+
+![Demo0](visualizations/runs/run10.jpg)
+
+#### Iteration 40000
+
+![Train1](visualizations/losses/train_loss20.png)
+
+![Demo1](visualizations/runs/run20.jpg)
+
+### Observations
+
+- The **adversarial loss** doesn't seem to be contributing to the learning of the model as it stays almost the same throughout the training.
+- The results don't look realistic from any angle adding weight to the possibility of failure in adversarial training. 
 
 ## Acknowledgements
 
 Code is based on the official [AOT-GAN Repo](https://github.com/researchmm/AOT-GAN-for-Inpainting).
-
-<!-- ## Results
-
-![Demo0](visualizations/res0.jpg)
-
-![Demo1](visualizations/res1.jpg)
-
-![Demo2](visualizations/res2.jpg)
-
-![Demo3](visualizations/res3.jpg) -->
