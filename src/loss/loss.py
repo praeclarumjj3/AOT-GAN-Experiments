@@ -91,14 +91,11 @@ class smgan():
             g_fake = F.interpolate(g_fake, size=(ht, wt), mode='bilinear', align_corners=True)
             d_fake = F.interpolate(d_fake, size=(ht, wt), mode='bilinear', align_corners=True)
             d_real = F.interpolate(d_real, size=(ht, wt), mode='bilinear', align_corners=True)
-        d_fake_label = gaussian_blur(masks, (self.ksize, self.ksize), (10, 10)).detach().cuda()
-        d_real_label = torch.zeros_like(d_real).cuda()
+        d_fake_label = gaussian_blur(1 - masks, (self.ksize, self.ksize), (10, 10)).detach().cuda()
+        d_real_label = torch.ones_like(d_real).cuda()
         g_fake_label = torch.ones_like(g_fake).cuda()
 
         dis_loss = self.loss_fn(d_fake, d_fake_label) + self.loss_fn(d_real, d_real_label)
         gen_loss = self.loss_fn(g_fake, g_fake_label) * masks / torch.mean(masks)
 
         return dis_loss.mean(), gen_loss.mean()
-        
-
-

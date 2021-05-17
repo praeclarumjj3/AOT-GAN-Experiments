@@ -127,7 +127,7 @@ The model was trained for `25000 iterations` on a total of `18034 images` with  
 
 ![Demo1](visualizations/pconv_test/runs/run20.jpg)
 
-You can find more results in **[visualizations folder under pconv_test](visualizations/pconv_test/)**.
+You can find more iteration-wise results in **[visualizations folder under pconv_test](visualizations/pconv_test/)**.
 
 
 ### Results using the Training PConv Mask Dataset
@@ -146,7 +146,7 @@ The model was trained for `40000 iterations` on a total of `18034 images` with  
 
 ![Demo1](visualizations/pconv_train/runs/run20.jpg)
 
-You can find more results in **[visualizations folder under pconv_train](visualizations/pconv_train/)**.
+You can find more iteration-wise results in **[visualizations folder under pconv_train](visualizations/pconv_train/)**.
 
 ### Demo Results
 
@@ -163,6 +163,8 @@ You can find more results in **[visualizations folder under pconv_train](visuali
 - The results don't look realistic from any angle adding weight to the possibility of failure in adversarial training when using **train pconv masks dataset**. However, if we use the **test pconv masks dataset** for training, the results are realistic even though adversarial losses don't contribute much to the learning.
 
 - Training is beneficial only using the `testing pconv masks dataset`.
+
+- Training for longer than `1e4` iterations doesn't add much improvement to the results (also visible from the loss curves).
 
 ## Acknowledgements
 

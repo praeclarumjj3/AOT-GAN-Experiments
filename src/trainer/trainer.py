@@ -86,18 +86,23 @@ class Trainer():
                 os.path.join(self.args.save_dir, f'O{str(self.iteration).zfill(7)}.pt'))
             
     def plot_iter_loss(self, iter_l1_loss, iter_adv_g_loss, iter_adv_d_loss, k=None):
+        if not os.path.exists('visualizations/losses/{}'.format(k)):
+                os.makedirs('visualizations/losses/{}'.format(k))
         plt.close()
-        plt.plot(list(range(1, len(iter_l1_loss) + 1)), iter_l1_loss, label = "Rec Loss")
-        plt.plot(list(range(1, len(iter_adv_g_loss) + 1)), iter_adv_g_loss, label = "Adv G Loss")
-        plt.plot(list(range(1, len(iter_adv_d_loss) + 1)), iter_adv_d_loss, label = "Adv D Loss")
+        plt.plot(list(range(1, len(iter_l1_loss) + 1)), iter_l1_loss, label = "Rec Loss", color = "blue")
         plt.legend()
         plt.title("Training Loss")
-        if not os.path.exists('visualizations/losses/'):
-                os.makedirs('visualizations/losses/')
-        if k is None:
-            plt.savefig('visualizations/losses/train_loss.png')
-        else:
-            plt.savefig('visualizations/losses/train_loss{}.png'.format(k))
+        plt.savefig('visualizations/losses/{}/train_rec_loss.png'.format(k))
+        plt.close()
+        plt.plot(list(range(1, len(iter_adv_g_loss) + 1)), iter_adv_g_loss, label = "Adv G Loss",  color = "green")
+        plt.legend()
+        plt.title("Training Loss")
+        plt.savefig('visualizations/losses/{}/train_adv_g_loss.png'.format(k))
+        plt.close()
+        plt.plot(list(range(1, len(iter_adv_d_loss) + 1)), iter_adv_d_loss, label = "Adv D Loss",  color = "red")
+        plt.legend()
+        plt.title("Training Loss")
+        plt.savefig('visualizations/losses/{}/train_adv_d_loss.png'.format(k))
 
     def train(self):
         pbar = range(self.iteration, self.args.iterations)
