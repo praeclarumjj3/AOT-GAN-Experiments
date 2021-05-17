@@ -67,14 +67,6 @@ The repository is structured as follows:
 
 ## 4. Reproduction
 
-<!-- ### Demo
-
-- Run the following command to run a demo and see visualization results:
-
-```bash
-$ sh scripts/demo.sh
-``` -->
-
 ### Training
 
 - You can change the cofigurational parameters for training in the `src/utils/option.py` file.
@@ -97,11 +89,30 @@ $ python -m pretty_errors
 - In the plots below:
     - **Rec Loss** =  *λ<sub>1</sub>* L<sub>rec</sub> + *λ<sub>2</sub>* L<sub>perceptual</sub> + *λ<sub>3</sub>* L<sub>style<sub>  ; λ<sub>1</sub> = 1, λ<sub>2</sub> = 0.1, λ<sub>3</sub> = 250
     - **Adv G Loss** = 0.01 * L<sub>gen_gan</sub>
-    - **Adv D Loss** = L<sub>gen_disc</sub>
+    - **Adv D Loss** = L<sub>gen_disc</sub> 
 
-- The model was trained for `40000 iterations` on a total of `18034 images` with  `batch size=8`  
+### Results using the Testing PConv Mask Dataset
+
+The model was trained for `25000 iterations` on a total of `18034 images` with  `batch size=8`. The checkpint frequency was `1000 iterations`.
+
+#### Iteration 10000
+
+![Train0](visualizations/pconv_test/losses/train_loss10.png)
+
+![Demo0](visualizations/pconv_test/runs/run10.jpg)
+
+#### Iteration 20000
+
+![Train1](visualizations/pconv_test/losses/train_loss20.png)
+
+![Demo1](visualizations/pconv_test/runs/run20.jpg)
+
+You can find more results in **[visualizations folder under pconv_test](visualizations/pconv_test/)**.
+
 
 ### Results using the Training PConv Mask Dataset
+
+The model was trained for `40000 iterations` on a total of `18034 images` with  `batch size=8`. The checkpint frequency was `2000 iterations`.
 
 #### Iteration 20000
 
@@ -115,10 +126,15 @@ $ python -m pretty_errors
 
 ![Demo1](visualizations/pconv_train/runs/run20.jpg)
 
+You can find more results in **[visualizations folder under pconv_train](visualizations/pconv_train/)**.
+
 ### Observations
 
 - The **adversarial loss** doesn't seem to be contributing to the learning of the model as it stays almost the same throughout the training.
-- The results don't look realistic from any angle adding weight to the possibility of failure in adversarial training. 
+
+- The results don't look realistic from any angle adding weight to the possibility of failure in adversarial training when using **train pconv masks dataset**. However, if we use the **test pconv masks dataset** for training, the results are realistic even though adversarial losses don't contribute much to the learning.
+
+- Training is beneficial only using the `testing pconv masks dataset`.
 
 ## Acknowledgements
 
