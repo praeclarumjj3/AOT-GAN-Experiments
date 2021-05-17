@@ -56,7 +56,7 @@ class InpaintingData(Dataset):
         else:
             mask = np.zeros((self.h, self.w)).astype(np.uint8)
             mask[self.h//4:self.h//4*3, self.w//4:self.w//4*3] = 1
-            mask = Image.fromarray(m).convert('L')
+            mask = Image.fromarray(mask).convert('L')
         
         # augment
         image = self.img_trans(image) * 2. - 1.

@@ -67,6 +67,26 @@ The repository is structured as follows:
 
 ## 4. Reproduction
 
+### Test Demo
+
+Run the following scripts
+
+```
+sh test.sh
+```
+
+#### Official Pretrained Models
+
+Download the [Places2](https://drive.google.com/drive/folders/1bSOH-2nB3feFRyDEmiX81CEiWkghss3i) model.
+
+```
+gdown https://drive.google.com/uc?id=1FgeLfUONic3IP690YhlpGpowXqi_NEAb
+```
+
+#### Testing with trained models
+
+Replace the name of the model in [test.sh](test.sh) file.
+
 ### Training
 
 - You can change the cofigurational parameters for training in the `src/utils/option.py` file.
@@ -127,6 +147,14 @@ The model was trained for `40000 iterations` on a total of `18034 images` with  
 ![Demo1](visualizations/pconv_train/runs/run20.jpg)
 
 You can find more results in **[visualizations folder under pconv_train](visualizations/pconv_train/)**.
+
+### Demo Results
+
+![Demo0](visualizations/demos/demo0.jpg)
+
+![Demo1](visualizations/demos/demo4.jpg)
+
+![Demo2](visualizations/demos/demo8.jpg)
 
 ### Observations
 

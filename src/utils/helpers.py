@@ -67,3 +67,39 @@ def visualize_run(i, img, mask, erased_img, pred_img, target_img):
 
     f.savefig('visualizations/runs/run' + str(i) + '.jpg')
     plt.close(f)
+
+def visualize_test(i, img, erased_img, pred_img, target_img):
+    plt.rcParams.update({'font.size': 10})
+
+    img = denormalize(img[0].cpu()) 
+    img = img.permute(1, 2, 0).numpy()
+
+    erased_img = denormalize(erased_img[0].cpu()) 
+    erased_img = erased_img.permute(1, 2, 0).numpy()
+
+    pred_img = denormalize(pred_img[0].cpu()) 
+    pred_img = pred_img.permute(1, 2, 0).numpy()
+
+    target_img = denormalize(target_img[0].cpu()) 
+    target_img = target_img.permute(1, 2, 0).numpy()
+
+    f, (ax1,ax3,ax4,ax5) = plt.subplots(1, 4, figsize=(9, 3))
+    
+    ax1.imshow(img)
+    ax1.set_title("Original Image")
+    ax1.axis('off')
+    
+    ax3.imshow(erased_img)
+    ax3.set_title("Incomplete Image")
+    ax3.axis('off')
+
+    ax4.imshow(pred_img)
+    ax4.set_title("Predicted Image")
+    ax4.axis('off')
+
+    ax5.imshow(target_img)
+    ax5.set_title("Inpainted Image")
+    ax5.axis('off')
+
+    f.savefig('visualizations/demos/demo' + str(i) + '.jpg')
+    plt.close(f)

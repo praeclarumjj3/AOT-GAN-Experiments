@@ -71,13 +71,13 @@ parser.add_argument('--save_every', type=int, default=2e3,
                     help='frequency for saving models')
 parser.add_argument('--save_dir', type=str, default='experiments',
                     help='directory for saving models and logs')
-parser.add_argument('--tensorboard', action='store_true',
-                    help='default: false, since it will slow training. use it for debugging')
 
 # test and demo specifications 
 parser.add_argument('--pre_train', type=str, default=None,
                     help='path to pretrained models')
-parser.add_argument('--outputs', type=str, default='outputs', 
+parser.add_argument('--num_test', default=10,
+                    help='Number of images to test on')
+parser.add_argument('--outputs', type=str, default='visualizations/demos', 
                     help='path to save results')
 parser.add_argument('--thick',  type=int, default=15, 
                     help='the thick of pen for free-form drawing')

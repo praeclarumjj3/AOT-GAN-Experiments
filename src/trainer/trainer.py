@@ -6,14 +6,13 @@ from glob import glob
 import torch
 import torch.optim as optim
 from torchvision.utils import make_grid
-from torch.utils.tensorboard import SummaryWriter
 from torch.nn.parallel import DistributedDataParallel as DDP
 import matplotlib.pyplot as plt
 from data import create_loader 
 from loss import loss as loss_module
 from .common import timer, reduce_loss_dict
 from icecream import ic
-from utils.helpers import visualize_run, visualize_single_map
+from utils.helpers import visualize_run
 from etaprogress.progress import ProgressBar
 import sys
 
@@ -45,10 +44,6 @@ class Trainer():
         if args.distributed:
             self.netG = DDP(self.netG, device_ids= [args.local_rank], output_device=[args.local_rank])
             self.netD = DDP(self.netD, device_ids= [args.local_rank], output_device=[args.local_rank])
-        
-        if args.tensorboard: 
-            self.writer = SummaryWriter(os.path.join(args.save_dir, 'log'))
-            
 
     def load(self):
         try: 

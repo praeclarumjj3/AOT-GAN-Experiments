@@ -4,13 +4,14 @@ import importlib
 import numpy as np
 from PIL import Image
 from glob import glob
-
 import torch
 import torch.nn as nn
 from torchvision.transforms import ToTensor
-
+from utils.helpers import visualize_test
 from utils.option import args 
-
+from tqdm import tqdm
+import torchvision.transforms as transforms
+from icecream import ic
 
 def postprocess(image):
     image = torch.clamp(image, -1., 1.)
@@ -32,17 +33,29 @@ def main_worker(args, use_gpu=True):
 
     # prepare dataset
     image_paths = []
-    for ext in ['.jpg', '.png']: 
-        image_paths.extend(glob(os.path.join(args.dir_image, '*'+ext)))
-    image_paths.sort()
-    mask_paths = sorted(glob(os.path.join(args.dir_mask, '*.png')))
+    with open(os.path.join(args.dir_image, args.data_test,'val.txt')) as f:
+        images_list = f.read().splitlines()
+    for path in images_list: 
+        image_paths.append(os.path.join(args.dir_image, args.data_train,path))
+    # image_paths.sort()
+    mask_paths = glob(os.path.join(args.dir_mask, args.mask_type, '*.png'))
     os.makedirs(args.outputs, exist_ok=True)
     
+    trans = transforms.Compose([
+    transforms.Resize((args.image_size, args.image_size), interpolation=transforms.InterpolationMode.NEAREST),])
+    j = 0
+
     # iteration through datasets
-    for ipath, mpath in zip(image_paths, mask_paths): 
+    for ipath, mpath in tqdm(zip(image_paths, mask_paths)): 
+        
+        if j >= args.num_test:
+            exit()
+
         image = ToTensor()(Image.open(ipath).convert('RGB'))
+        image = trans(image)
         image = (image * 2.0 - 1.0).unsqueeze(0)
         mask = ToTensor()(Image.open(mpath).convert('L'))
+        mask = trans(mask)
         mask = mask.unsqueeze(0)
         image, mask = image.cuda(), mask.cuda()
         image_masked = image * (1 - mask.float()) + mask
@@ -51,11 +64,9 @@ def main_worker(args, use_gpu=True):
             pred_img = model(image_masked, mask)
 
         comp_imgs = (1 - mask) * image + mask * pred_img
-        image_name = os.path.basename(ipath).split('.')[0]
-        postprocess(image_masked[0]).save(os.path.join(args.outputs, f'{image_name}_masked.png'))
-        postprocess(pred_img[0]).save(os.path.join(args.outputs, f'{image_name}_pred.png'))
-        postprocess(comp_imgs[0]).save(os.path.join(args.outputs, f'{image_name}_comp.png'))
-        print(f'saving to {os.path.join(args.outputs, image_name)}')
+    
+        visualize_test(j, image, image * (1-mask), pred_img.detach(), comp_imgs.detach())
+        j+=1
 
 
 if __name__ == '__main__':
