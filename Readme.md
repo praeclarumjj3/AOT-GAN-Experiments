@@ -111,34 +111,51 @@ $ python -m pretty_errors
     - **Adv G Loss** = 0.01 * L<sub>gen_gan</sub>
     - **Adv D Loss** = L<sub>gen_disc</sub> 
 
-### Results using the Testing PConv Mask Dataset
+### Results using the Testing PConv Mask Dataset without Style Loss
 
-The model was trained for `25000 iterations` on a total of `18034 images` with  `batch size=8`. The checkpint frequency was `1000 iterations`.
+The model was trained for `10000 iterations` on a total of `18034 images` with  `batch size=8`. The checkpoint frequency was `2000 iterations`.
 
-#### Iteration 10000
+<p float="center">
+  <img src="visualizations/pconv_test/no_style/losses/10/train_rec_loss.png" width="400"/>
+  <img src="visualizations/pconv_test/no_style/losses/10/train_adv_d_loss.png" width="400" />
+  <img src="visualizations/pconv_test/no_style/losses/10/train_adv_g_loss.png" width="400" />
+</p>
 
-![Train0](visualizations/pconv_test/losses/train_loss10.png)
+You can find more iteration-wise results in **[visualizations folder under no_style in pconv_test](visualizations/pconv_test/no_style)**.
 
-![Demo0](visualizations/pconv_test/runs/run10.jpg)
+#### Demo Results
 
-#### Iteration 20000
+![Demo0](visualizations/pconv_test/no_style/demos/demo0.jpg)
 
-![Train1](visualizations/pconv_test/losses/train_loss20.png)
+![Demo1](visualizations/pconv_test/no_style/demos/demo3.jpg)
 
-![Demo1](visualizations/pconv_test/runs/run20.jpg)
+![Demo2](visualizations/pconv_test/no_style/demos/demo8.jpg)
 
-You can find more iteration-wise results in **[visualizations folder under pconv_test](visualizations/pconv_test/)**.
+
+### Results using the Testing PConv Mask Dataset with Style Loss
+
+The model was trained for `10000 iterations` on a total of `18034 images` with  `batch size=8`. The checkpoint frequency was `2000 iterations`.
+
+<p float="center">
+  <img src="visualizations/pconv_test/style/losses/10/train_rec_loss.png" width="400"/>
+  <img src="visualizations/pconv_test/style/losses/10/train_adv_d_loss.png" width="400" />
+  <img src="visualizations/pconv_test/style/losses/10/train_adv_g_loss.png" width="400" />
+</p>
+
+You can find more iteration-wise results in **[visualizations folder under style in pconv_test](visualizations/pconv_test/style)**.
+
+#### Demo Results
+
+![Demo0](visualizations/pconv_test/style/demos/demo0.jpg)
+
+![Demo1](visualizations/pconv_test/style/demos/demo3.jpg)
+
+![Demo2](visualizations/pconv_test/style/demos/demo8.jpg)
 
 
 ### Results using the Training PConv Mask Dataset
 
-The model was trained for `40000 iterations` on a total of `18034 images` with  `batch size=8`. The checkpint frequency was `2000 iterations`.
-
-#### Iteration 20000
-
-![Train0](visualizations/pconv_train/losses/train_loss10.png)
-
-![Demo0](visualizations/pconv_train/runs/run10.jpg)
+The model was trained for `40000 iterations` on a total of `18034 images` with  `batch size=8`. The checkpoint frequency was `2000 iterations`.
 
 #### Iteration 40000
 
@@ -148,13 +165,6 @@ The model was trained for `40000 iterations` on a total of `18034 images` with  
 
 You can find more iteration-wise results in **[visualizations folder under pconv_train](visualizations/pconv_train/)**.
 
-### Demo Results
-
-![Demo0](visualizations/demos/demo0.jpg)
-
-![Demo1](visualizations/demos/demo4.jpg)
-
-![Demo2](visualizations/demos/demo8.jpg)
 
 ### Observations
 
@@ -164,7 +174,9 @@ You can find more iteration-wise results in **[visualizations folder under pconv
 
 - Training is beneficial only using the `testing pconv masks dataset`.
 
-- Training for longer than `1e4` iterations doesn't add much improvement to the results (also visible from the loss curves).
+- Training for longer than `1e4` iterations doesn't add much improvement to the results.
+
+- Training **without style loss** produces blurry results. Therefor, style loss is an important component for texture related synthesis of images.
 
 ## Acknowledgements
 

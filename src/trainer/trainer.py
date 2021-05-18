@@ -184,6 +184,3 @@ class Trainer():
             
             if self.args.global_rank == 0 and (self.iteration % self.args.save_every) == 0: 
                 self.save()
-        
-        if self.args.global_rank == 0:
-            self.plot_iter_loss(iter_l1_loss, iter_adv_g_loss, iter_adv_d_loss)
