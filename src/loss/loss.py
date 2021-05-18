@@ -96,6 +96,6 @@ class smgan():
         g_fake_label = torch.ones_like(g_fake).cuda()
 
         dis_loss = self.loss_fn(d_fake, d_fake_label) + self.loss_fn(d_real, d_real_label)
-        gen_loss = self.loss_fn(g_fake, g_fake_label) * masks / torch.mean(masks)
+        gen_loss = (self.loss_fn(g_fake, g_fake_label) * masks + 1e-7) / (torch.mean(masks) + 1e-7)
 
         return dis_loss.mean(), gen_loss.mean()

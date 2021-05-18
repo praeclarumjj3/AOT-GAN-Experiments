@@ -32,8 +32,8 @@ wget http://data.csail.mit.edu/places/places365/places365standard_easyformat.tar
 
 - Download the [PConv Masks](https://nv-adlr.github.io/publication/partialconv-inpainting):
 ``` 
-wget https://www.dropbox.com/s/qp8cxqttta4zi70/irregular_mask.zip  // training dataset
-wget https://www.dropbox.com/s/qp8cxqttta4zi70/test_mask.zip       // testing dataset
+wget https://www.dropbox.com/s/qp8cxqttta4zi70/irregular_mask.zip?dl=1  // training dataset
+wget https://www.dropbox.com/s/qp8cxqttta4zi70/test_mask.zip?dl=1       // testing dataset
 ```
 
 - Unzip the files according to the following structure
@@ -153,6 +153,25 @@ You can find more iteration-wise results in **[visualizations folder under style
 ![Demo2](visualizations/pconv_test/style/demos/demo8.jpg)
 
 
+### Results using the Testing PConv Mask Dataset without Adversarial Loss
+
+The model was trained for `10000 iterations` on a total of `18034 images` with  `batch size=8`. The checkpoint frequency was `2000 iterations`.
+
+<p float="center">
+  <img src="visualizations/pconv_test/no_adv/losses/train_rec_loss9.png" width="400"/>
+</p>
+
+You can find more iteration-wise results in **[visualizations folder under no_adv in pconv_test](visualizations/pconv_test/no_adv)**.
+
+#### Demo Results
+
+![Demo0](visualizations/pconv_test/no_adv/demos/demo0.jpg)
+
+![Demo1](visualizations/pconv_test/no_adv/demos/demo3.jpg)
+
+![Demo2](visualizations/pconv_test/no_adv/demos/demo8.jpg)
+
+
 ### Results using the Training PConv Mask Dataset
 
 The model was trained for `40000 iterations` on a total of `18034 images` with  `batch size=8`. The checkpoint frequency was `2000 iterations`.
@@ -176,7 +195,9 @@ You can find more iteration-wise results in **[visualizations folder under pconv
 
 - Training for longer than `1e4` iterations doesn't add much improvement to the results.
 
-- Training **without style loss** produces blurry results. Therefor, style loss is an important component for texture related synthesis of images.
+- Training **without style loss** produces blurry results. Therefore, style loss is an important component for texture related synthesis of images.
+
+- Training **without adversarial loss** also produces good quality results!
 
 ## Acknowledgements
 
