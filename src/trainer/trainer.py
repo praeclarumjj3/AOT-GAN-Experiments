@@ -161,7 +161,7 @@ class Trainer():
                 timer_model.hold()
                 timer_data.tic()
                 
-                l1_loss = losses['L1'] + losses['Perceptual'] + losses['Style']
+                l1_loss = losses['L1'] + losses['Perceptual']
                 iter_l1_loss.append(l1_loss.item())
 
                 advg_loss = losses['advg']

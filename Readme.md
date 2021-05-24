@@ -8,7 +8,8 @@
 2. [Setup Instructions](#2-setup-instructions)
 3. [Repository Overview](#3-repository-overview)
 4. [Reproduction](#4-reproduction)
-5. [Experiments](#5-experiments)
+5. [Experiments on Places2](#5-experiments-on-places2)
+6. [Experiments on COCOA](#5-experiments-on-places2)
 
 ## 1. Overview
 
@@ -25,16 +26,46 @@ git clone https://github.com/praeclarumjj3/AOT-GAN-Experiments.git
 cd AOT-GAN-Experiments
 ```
 
-- Download the **Places2** dataset:
-```
-wget http://data.csail.mit.edu/places/places365/places365standard_easyformat.tar
-```
+### Download the PConv Masks
 
 - Download the [PConv Masks](https://nv-adlr.github.io/publication/partialconv-inpainting):
 ``` 
 wget https://www.dropbox.com/s/qp8cxqttta4zi70/irregular_mask.zip?dl=1  // training dataset
 wget https://www.dropbox.com/s/qp8cxqttta4zi70/test_mask.zip?dl=1       // testing dataset
 ```
+
+### Download the Places2 dataset
+- Download the **Places2** dataset:
+```
+wget http://data.csail.mit.edu/places/places365/places365standard_easyformat.tar
+```
+
+### Download the COCOA dataset
+
+- Download the **MS-COCO 2014** images and unzip:
+```
+wget http://images.cocodataset.org/zips/train2014.zip
+wget http://images.cocodataset.org/zips/val2014.zip
+```
+
+- Download the annotations and untar:
+``` 
+gdown https://drive.google.com/uc?id=0B8e3LNo7STslZURoTzhhMFpCelE
+tar -xf annotations.tar.gz
+```
+
+- The COCOA dataset has annotations for only `2500 training images` and `1300 validation images`. So, if you want to use only those images, run:
+
+```shell
+python prepare_cocoa_flist.py
+```
+
+- On the other hand, the original COCO2014 dataset has about `83k training images` and `40k validation images`. So, if you want to use all images, run:
+
+```shell
+python prepare_coco_flist.py
+```
+---
 
 - Unzip the files according to the following structure
 
@@ -43,7 +74,14 @@ AOT-GAN-Experiments
 ├── dataset
 │   ├── places2 (rename places365 folder)
 │   ├── pconv (rename the folder inside irregular_mask / test_mask)
+│   ├── COCOA
+│   │   ├── annotations
+│   │   ├── train2014
+│   │   ├── val2014
+│   │   ├── train.txt
+│   │   ├── val.txt
 ```
+---
 
 - Install [Pytorch](https://pytorch.org/get-started/locally/) and other dependencies creating a conda environment:
 
@@ -104,7 +142,7 @@ $ python -m pip install pretty_errors
 $ python -m pretty_errors
 ```
 
-## 5. Experiments
+## 5. Experiments on Places2
 
 - In the plots below:
     - **Rec Loss** =  *λ<sub>1</sub>* L<sub>rec</sub> + *λ<sub>2</sub>* L<sub>perceptual</sub> + *λ<sub>3</sub>* L<sub>style<sub>  ; λ<sub>1</sub> = 1, λ<sub>2</sub> = 0.1, λ<sub>3</sub> = 250
@@ -198,6 +236,8 @@ You can find more iteration-wise results in **[visualizations folder under pconv
 - Training **without style loss** produces blurry results. Therefore, style loss is an important component for texture related synthesis of images.
 
 - Training **without adversarial loss** also produces good quality results!
+
+---
 
 ## Acknowledgements
 

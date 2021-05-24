@@ -71,6 +71,8 @@ parser.add_argument('--save_every', type=int, default=1e3,
                     help='frequency for saving models')
 parser.add_argument('--save_dir', type=str, default='experiments',
                     help='directory for saving models and logs')
+parser.add_argument('--model_name', type=str, default='aot_smPatchGAN',
+                    help='name of folder for checkpoints')
 
 # test and demo specifications 
 parser.add_argument('--pre_train', type=str, default=None,
