@@ -36,7 +36,7 @@ def main_worker(args, use_gpu=True):
     with open(os.path.join(args.dir_image, args.data_test,'val.txt')) as f:
         images_list = f.read().splitlines()
     for path in images_list: 
-        image_paths.append(os.path.join(args.dir_image, args.data_train,path))
+        image_paths.append(os.path.join(args.dir_image, args.data_test,path))
     # image_paths.sort()
     mask_paths = glob(os.path.join(args.dir_mask, args.mask_type, '*.png'))
     os.makedirs(args.outputs, exist_ok=True)

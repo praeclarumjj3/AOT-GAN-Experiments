@@ -9,7 +9,7 @@
 3. [Repository Overview](#3-repository-overview)
 4. [Reproduction](#4-reproduction)
 5. [Experiments on Places2](#5-experiments-on-places2)
-6. [Experiments on COCOA](#5-experiments-on-places2)
+6. [Experiments on COCOA](#6-experiments-on-cocoa)
 
 ## 1. Overview
 
@@ -238,6 +238,54 @@ You can find more iteration-wise results in **[visualizations folder under pconv
 - Training **without adversarial loss** also produces good quality results!
 
 ---
+
+## 6. Experiments on COCOA
+
+- In the plots below:
+    - **Rec Loss** =  *λ<sub>1</sub>* L<sub>rec</sub> + *λ<sub>2</sub>* L<sub>perceptual</sub>; λ<sub>1</sub> = 1, λ<sub>2</sub> = 0.1
+    - **Adv G Loss** = 0.01 * L<sub>gen_gan</sub>
+    - **Adv D Loss** = L<sub>gen_disc</sub>
+
+### Results using the Testing PConv Mask Dataset
+
+The model was trained for `10000 iterations` on a total of `18034 images` with  `batch size=8`. The checkpoint frequency was `2000 iterations`.
+
+<p float="center">
+  <img src="visualizations/cocoa/smpatchGAN/losses/10/train_rec_loss.png" width="400"/>
+  <img src="visualizations/cocoa/smpatchGAN/losses/10/train_adv_d_loss.png" width="400" />
+  <img src="visualizations/cocoa/smpatchGAN/losses/10/train_adv_g_loss.png" width="400" />
+</p>
+
+You can find more iteration-wise results in **[visualizations folder under smpatchGAN in coco](visualizations/coco/smpatchGAN)**.
+
+#### Demo Results
+
+![Demo0](visualizations/cocoa/smpatchGAN/demos/demo1.jpg)
+
+![Demo1](visualizations/cocoa/smpatchGAN/demos/demo3.jpg)
+
+![Demo2](visualizations/cocoa/smpatchGAN/demos/demo6.jpg)
+
+### Results using the Testing PConv Mask Dataset replacing SM-PatchGAN with standard PatchGAN loss
+
+The model was trained for `10000 iterations` on a total of `18034 images` with  `batch size=8`. The checkpoint frequency was `2000 iterations`.
+
+<p float="center">
+  <img src="visualizations/cocoa/patchGAN/losses/10/train_rec_loss.png" width="400"/>
+  <img src="visualizations/cocoa/patchGAN/losses/10/train_adv_d_loss.png" width="400" />
+  <img src="visualizations/cocoa/patchGAN/losses/10/train_adv_g_loss.png" width="400" />
+</p>
+
+You can find more iteration-wise results in **[visualizations folder under patchGAN in coco](visualizations/coco/patchGAN)**.
+
+#### Demo Results
+
+![Demo0](visualizations/cocoa/patchGAN/demos/demo1.jpg)
+
+![Demo1](visualizations/cocoa/patchGAN/demos/demo3.jpg)
+
+![Demo2](visualizations/cocoa/patchGAN/demos/demo6.jpg)
+  
 
 ## Acknowledgements
 
